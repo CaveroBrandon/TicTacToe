@@ -123,7 +123,6 @@ def fun_button9():
        boton9.configure(text = 'X')
 
 
-
 restart_game()
 show_table()
 while True:
