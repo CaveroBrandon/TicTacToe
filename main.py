@@ -1,101 +1,42 @@
 # Tic tac toe game, not ussing IA, just random numbers
 from random import randint
+from tkinter import *
 import sys
-global empty_spaces
-empty_spaces = {}
 
 
-def restart_game():
-    global empty_spaces
-    empty_spaces = {1: 1, 2: 2, 3: 3,
-                    4: 4, 5: 5, 6: 6,
-                    7: 7, 8: 8, 9: 9}
+def fun_console_version():
+    root.destroy()
+    import TicTacToe_V1
 
 
-def show_table():
-    print('**************')
-    print('|', empty_spaces[1], '|', empty_spaces[2], '|', empty_spaces[3], '|')
-    print('-------------')
-    print('|', empty_spaces[4], '|', empty_spaces[5], '|', empty_spaces[6], '|')
-    print('-------------')
-    print('|', empty_spaces[7], '|', empty_spaces[8], '|', empty_spaces[9], '|')
-    print('-------------')
+def fun_gui_version():
+    root.destroy()
+    import TicTacToe_V2
 
 
-def validate_decision():
-    try:
-        value_to_validate = int(input("Your turn:"))
-        if 9 >= value_to_validate >= 1:
-            if empty_spaces[value_to_validate] == 'X' or empty_spaces[value_to_validate] == 'O':
-                validate_decision()
-            else:
-                empty_spaces[value_to_validate] = 'X'
-                show_table()
-        else:
-            validate_decision()
-    except ValueError:
-        print('Your play most be a number')
-        validate_decision()
+def fun_exit():
+    root.destroy()
 
 
-def opponent_plays():
-    opponent_game = randint(1, 9)
-    if 9 >= opponent_game >= 1:
-        if empty_spaces[opponent_game] == 'X' or empty_spaces[opponent_game] == 'O':
-            opponent_plays()
-        else:
-            empty_spaces[opponent_game] = 'O'
-            show_table()
-    else:
-        opponent_plays()
+root = Tk()
+root.title('TIC TAC TOE')
+#root. geometry('350x150+250+200')
+
+label1 = Label(root, text = 'Choose one option')
+
+#Buttons definitions
+boton1 = Button(root, text = 'Console Version', command = fun_console_version, height = 3, width = 20)
+boton2 = Button(root, text = 'Gui Version', command = fun_gui_version, height = 3, width = 20)
+boton3 = Button(root, text = 'EXIT', command = fun_exit, height = 1, width = 10)
+
+#Buttons positioning
+boton1.grid(row = 1, column = 0)
+boton2.grid(row = 2, column = 0)
+boton3.grid(row = 3, column = 0)
+                
 
 
-def end_game_verification():
-    control = False
-    for ele in empty_spaces:
-        if str(empty_spaces[ele]).isdigit():
-            control = True
-    if empty_spaces[1] == empty_spaces[2] == empty_spaces[3] == 'X' or \
-            empty_spaces[4] == empty_spaces[5] == empty_spaces[6] == 'X' or \
-            empty_spaces[7] == empty_spaces[8] == empty_spaces[9] == 'X' or \
-            empty_spaces[1] == empty_spaces[4] == empty_spaces[7] == 'X' or \
-            empty_spaces[2] == empty_spaces[5] == empty_spaces[8] == 'X' or \
-            empty_spaces[3] == empty_spaces[6] == empty_spaces[9] == 'X' or \
-            empty_spaces[1] == empty_spaces[5] == empty_spaces[9] == 'X' or \
-            empty_spaces[3] == empty_spaces[5] == empty_spaces[7] == 'X':
-        print('CONGRATULATIONS YOU WIN')
-        game_control = input('Wanna play again Y/N:')
-        if game_control == 'Y' or 'y':
-            restart_game()
-        elif game_control == 'N' or 'n':
-            sys.exit()
-    elif empty_spaces[1] == empty_spaces[2] == empty_spaces[3] == 'O' or \
-            empty_spaces[4] == empty_spaces[5] == empty_spaces[6] == 'O' or \
-            empty_spaces[7] == empty_spaces[8] == empty_spaces[9] == 'O' or \
-            empty_spaces[1] == empty_spaces[4] == empty_spaces[7] == 'O' or \
-            empty_spaces[2] == empty_spaces[5] == empty_spaces[8] == 'O' or \
-            empty_spaces[3] == empty_spaces[6] == empty_spaces[9] == 'O' or \
-            empty_spaces[1] == empty_spaces[5] == empty_spaces[9] == 'O' or \
-            empty_spaces[3] == empty_spaces[5] == empty_spaces[7] == 'O':
-        print('YOU LOSE')
-        game_control = str(input('Wanna play again Y/N:'))
-        if game_control == 'Y' or 'y':
-            restart_game()
-        elif game_control == 'N' or 'n':
-            sys.exit()
-    if not control:
-        print('IT IS A TIE')
-        game_control = str(input('Wanna play again Y/N:'))
-        if game_control == 'Y' or 'y':
-            restart_game()
-        elif game_control == 'N' or 'n':
-            sys.exit()
+label1.grid(row = 0, column = 0)
 
 
-restart_game()
-show_table()
-while True:
-    end_game_verification()
-    validate_decision()
-    end_game_verification()
-    opponent_plays()
+root.mainloop()
